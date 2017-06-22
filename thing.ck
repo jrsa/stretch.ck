@@ -31,6 +31,7 @@ fun complex[][] analyzeSoundFile( string f, int size, int frames )
 
 200 => int frameCount;
 2048 => int fftSize;
+10.0 => float speedFactor;
 
 IFFT resynth => dac;
 
@@ -46,8 +47,11 @@ while( true )
     for( 0 => int i; i < spectra.cap(); i++)
     {
         <<< "playing frame", i >>>;
-        spectra[i] => resynth.transform; 
-        fftSize :: samp => now;
+        for( 0.0 => float x; x < speedFactor; 1.0 +=> x )
+        {
+            spectra[i] => resynth.transform; 
+            fftSize :: samp => now;
+        }
     }
 }
 
